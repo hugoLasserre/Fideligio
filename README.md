@@ -32,7 +32,7 @@ Cdiscount, Cultura, Amazon... souscrivent un abonnement à notre api qui permet 
 
 ## Swagger
 
-Visiter le <a href="http://localhost:3000/fideligio/api/swagger">Swagger</a>.
+Visiter le <a href="http://localhost:3000/">Swagger</a>.
 
 ## Installation
 
