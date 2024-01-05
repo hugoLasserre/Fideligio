@@ -36,6 +36,39 @@ Cdiscount, Cultura, Amazon... souscrivent un abonnement à notre api qui permet 
 $ npm install
 ```
 
+## GIT
+
+Si le commit concerne une création :
+[CREATE] :heavy_plus_sign:
+
+Si le commit concerne une suppression :
+[DELETE] :heavy_minus_sign:
+
+Si le commit concerne une modification :
+[UPDATE] :hammer:
+
+## Migration
+
+Après une modification dans un fichier entity, lancer les commandes suivantes pour qu'elles soient prises en compte dans la base de données.
+
+```bash
+# generate
+$ npm run migration:generate -- db/migrations/<migrationName>
+
+# run
+$ npm run migration:run
+```
+
+## Redis
+
+```bash
+$ wsl
+
+$ sudo systemctl start redis-server
+
+$ redis-cli
+```
+
 ## Running the app
 
 ```bash
