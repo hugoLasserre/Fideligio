@@ -30,6 +30,10 @@ Cdiscount, Cultura, Amazon... souscrivent un abonnement à notre api qui permet 
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Swagger
+
+Visiter le <a href="http://localhost:3000/swagger">Swagger</a>.
+
 ## Installation
 
 ```bash
