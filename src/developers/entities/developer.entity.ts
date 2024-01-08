@@ -6,7 +6,7 @@ export class Developer {
   id: number;
 
   @Column({ unique: true })
-  cleAPI: string;
+  cleAPI?: string;
 
   @Column({ unique: true })
   entreprise: string;
@@ -15,7 +15,7 @@ export class Developer {
   createdAt: Date;
 
   @Column()
-  status: string;
+  status?: string;
 
   @Column()
   notes: string;
