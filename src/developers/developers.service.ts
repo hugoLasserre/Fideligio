@@ -23,7 +23,7 @@ export class DevelopersService {
   async create(createDeveloperDto: CreateDeveloperDto): Promise<string> {
     const newDeveloper = this.developerRepository.create(createDeveloperDto);
     newDeveloper.status = "on";
-    newDeveloper.cleAPI = this.generateApiKey();
+    newDeveloper.cleAPI = await this.generateApiKey();
     this.developerRepository.save(newDeveloper)
     return newDeveloper.cleAPI;
   }
@@ -33,7 +33,13 @@ export class DevelopersService {
    * 
    * @returns chaine de caractères unique.
    */
-  private generateApiKey(): string {
+  private async generateApiKey(): Promise<string> {
+    const apikey = uuidv4();
+    const apiKeyExist = !!(await this.developerRepository.findOne({ where: { cleAPI: apikey } }));
+    
+    if (!apiKeyExist) {
+      this.generateApiKey();
+    }
     return uuidv4();
   }
 
