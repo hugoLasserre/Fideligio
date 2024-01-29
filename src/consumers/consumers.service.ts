@@ -1,26 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Consumer } from './entities/consumer.entity';
 
 @Injectable()
 export class ConsumersService {
+
+  constructor(
+    @InjectRepository(Consumer)
+    private readonly consumerRepository: Repository<Consumer>,
+  ) {}
+
   create(createConsumerDto: CreateConsumerDto) {
-    return 'This action adds a new consumer';
+    const newConsumer = this.consumerRepository.create(createConsumerDto);
+    newConsumer.solde = 0;
+    return this.consumerRepository.save(newConsumer)
   }
 
   findAll() {
-    return `This action returns all consumers`;
+    return this.consumerRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} consumer`;
+  async findOne(id: number) {
+    const consumer = await this.consumerRepository.findOne({ where: { id } });
+
+    if (!consumer) {
+      throw new NotFoundException(`Consumer with ID ${id} not found`);
+    }
+
+    return consumer;
   }
 
-  update(id: number, updateConsumerDto: UpdateConsumerDto) {
-    return `This action updates a #${id} consumer`;
+  async update(id: number, updateConsumerDto: UpdateConsumerDto) {
+    const consumer = await this.consumerRepository.findOne({ where: { id } });
+
+    if (!consumer) {
+      throw new NotFoundException(`Consumer with ID ${id} not found`);
+    }
+
+    Object.assign(consumer, updateConsumerDto);
+
+    return await this.consumerRepository.save(consumer);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} consumer`;
+  async remove(id: number) {
+    const consumer = await this.consumerRepository.findOne({ where: { id } });
+
+    if (!consumer) {
+      throw new NotFoundException(`Consumer with ID ${id} not found`);
+    }
+
+    await this.consumerRepository.remove(consumer);
   }
 }
