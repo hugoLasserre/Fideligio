@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    container_name: fideligio-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_HOST=db
+      - REDIS_HOST=redis
+
+  db:
+    image: postgres:latest
+    container_name: fideligio-db
+    environment:
+      - POSTGRES_DB=fideligio
+      - POSTGRES_USER=fideligio-user
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pgdata/:/var/lib/postgresql/data/:rw
+
+  redis:
+    image: redis:alpine
+    container_name: fideligio-redis
+    ports:
+      - 6379:6379
