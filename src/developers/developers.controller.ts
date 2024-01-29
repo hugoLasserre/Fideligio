@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { DevelopersService } from './developers.service';
 import { CreateDeveloperDto } from './dto/create-developer.dto';
 import { UpdateDeveloperDto } from './dto/update-developer.dto';
-import { ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
 
 @ApiTags('Developer')
 @Controller('developers')
@@ -13,6 +13,10 @@ export class DevelopersController {
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
+  @ApiBody({
+    type: CreateDeveloperDto,
+    description: 'Json structure for developer object',
+  })
   create(@Body() createDeveloperDto: CreateDeveloperDto) {
     return this.developersService.create(createDeveloperDto);
   }
@@ -38,6 +42,10 @@ export class DevelopersController {
   @ApiNotFoundResponse({ description: 'Resource not found' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
+  @ApiBody({
+    type: UpdateDeveloperDto,
+    description: 'Json structure for developer object',
+  })
   update(@Param('id') id: string, @Body() updateDeveloperDto: UpdateDeveloperDto) {
     return this.developersService.update(+id, updateDeveloperDto);
   }

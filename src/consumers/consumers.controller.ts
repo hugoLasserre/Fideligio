@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ConsumersService } from './consumers.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
-import { ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
 
 @ApiTags('Consumer')
 @Controller('consumers')
@@ -13,6 +13,10 @@ export class ConsumersController {
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
+  @ApiBody({
+    type: CreateConsumerDto,
+    description: 'Json structure for consumer object',
+  })
   create(@Body() createConsumerDto: CreateConsumerDto) {
     return this.consumersService.create(createConsumerDto);
   }
@@ -38,6 +42,10 @@ export class ConsumersController {
   @ApiNotFoundResponse({ description: 'Resource not found' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
+  @ApiBody({
+    type: UpdateConsumerDto,
+    description: 'Json structure for consumer object',
+  })
   update(@Param('id') id: string, @Body() updateConsumerDto: UpdateConsumerDto) {
     return this.consumersService.update(+id, updateConsumerDto);
   }
