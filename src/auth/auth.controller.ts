@@ -42,14 +42,4 @@ export class AuthController {
   generateApiKey(@Request() req) {
     return this.authService.generateApiKey(req.user.username);
   }
-
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  @ApiBearerAuth()
-  @ApiOkResponse({ description: 'The resource was returned successfully ' })
-  @ApiForbiddenResponse({ description: 'Unauthorized Request' })
-  @ApiNotFoundResponse({ description: 'Resource not found' })
-  getProfile(@Request() req) {
-    return req.user;
-  }
 }
