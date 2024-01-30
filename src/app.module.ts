@@ -9,6 +9,7 @@ import { RedisOptions } from 'ioredis'
 import * as redisStore from 'cache-manager-ioredis'
 import { CacheModule } from '@nestjs/cache-manager'
 import type { Cache } from 'cache-manager'
+import { ThrottlerModule } from '@nestjs/throttler'
 
 export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>
 
@@ -25,6 +26,12 @@ export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>
     TypeOrmModule.forRoot(dataSourceOptions),
     ConsumersModule,
     DevelopersModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 1000,
+        limit: 50,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],
