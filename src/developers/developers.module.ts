@@ -10,5 +10,6 @@ import { Developer } from './entities/developer.entity';
   ],
   controllers: [DevelopersController],
   providers: [DevelopersService],
+  exports: [DevelopersService]
 })
 export class DevelopersModule {}

@@ -9,6 +9,7 @@ import { RedisOptions } from 'ioredis';
 import * as redisStore from 'cache-manager-ioredis';
 import { CacheModule } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
+import { AuthModule } from './auth/auth.module';
 
 export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>;
 
@@ -25,6 +26,7 @@ export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>;
     TypeOrmModule.forRoot(dataSourceOptions),
     ConsumersModule,
     DevelopersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

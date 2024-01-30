@@ -20,27 +20,11 @@ export class DevelopersService {
    * @param createDeveloperDto 
    * @returns clé d'api
    */
-  async create(createDeveloperDto: CreateDeveloperDto): Promise<string> {
+  async create(createDeveloperDto: CreateDeveloperDto): Promise<Developer> {
     const newDeveloper = this.developerRepository.create(createDeveloperDto);
     newDeveloper.status = "on";
-    newDeveloper.cleAPI = await this.generateApiKey();
     this.developerRepository.save(newDeveloper)
-    return newDeveloper.cleAPI;
-  }
-
-  /**
-   * Génère la clé d'API unique.
-   * 
-   * @returns chaine de caractères unique.
-   */
-  private async generateApiKey(): Promise<string> {
-    const apikey = uuidv4();
-    const apiKeyExist = !!(await this.developerRepository.findOne({ where: { cleAPI: apikey } }));
-    
-    if (!apiKeyExist) {
-      this.generateApiKey();
-    }
-    return uuidv4();
+    return newDeveloper;
   }
 
   /**
@@ -56,6 +40,26 @@ export class DevelopersService {
 
     if (!developer) {
       throw new NotFoundException(`Developer with ID ${id} not found`);
+    }
+
+    return developer;
+  }
+
+  async notFindByEntreprise(entreprise: string): Promise<Developer> {
+    const developer = await this.developerRepository.findOneBy({entreprise: entreprise});
+
+    if (developer) {
+      throw new NotFoundException(`Account with name ${entreprise} already exist`);
+    }
+
+    return developer;
+  }
+
+  async findByEntreprise(entreprise: string): Promise<Developer> {
+    const developer = await this.developerRepository.findOneBy({entreprise: entreprise});
+
+    if (!developer) {
+      throw new NotFoundException(`Account with name ${entreprise} not exist`);
     }
 
     return developer;

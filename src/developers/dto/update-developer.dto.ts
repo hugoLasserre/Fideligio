@@ -8,28 +8,35 @@ export class UpdateDeveloperDto extends PartialType(CreateDeveloperDto) {
   @IsString()
   @ApiProperty({
     example: 'yrctuvyibuonip,opnibu',
-    required: true
+    required: false
   })
-  cleAPI: string;
+  cleAPI?: string;
 
   @IsString()
   @ApiProperty({
     example: 'Apple',
-    required: true
+    required: false
   })
-  entreprise: string;
+  entreprise?: string;
+
+  @IsString()
+  @ApiProperty({
+    example: '123456',
+    required: false
+  })
+  password?: string;
 
   @IsString()
   @ApiProperty({
     example: 'Active',
-    required: true
+    required: false
   })
   status?: string;
 
   @IsString()
   @ApiProperty({
     example: 'Informations',
-    required: true
+    required: false
   })
   notes?: string;
 }

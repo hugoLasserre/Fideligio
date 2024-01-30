@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Fideligio')
     .setDescription('The Fideligio API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('Fideligio')
     .build();
   const document = SwaggerModule.createDocument(app, config);

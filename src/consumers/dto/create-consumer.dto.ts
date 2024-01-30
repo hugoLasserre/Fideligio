@@ -17,12 +17,12 @@ export class CreateConsumerDto {
         example: '123456',
         required: true
      })
-    password?: string;
+    password: string;
   
     @IsNumber()
     @ApiProperty({
         example: 1,
         required: false
      })
-    solde: number;
+    solde?: number;
 }

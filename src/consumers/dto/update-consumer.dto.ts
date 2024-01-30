@@ -9,21 +9,21 @@ export class UpdateConsumerDto extends PartialType(CreateConsumerDto) {
   @IsEmail()
   @ApiProperty({
     example: 'test.test@test.com',
-    required: true
+    required: false
   })
-  email: string;
+  email?: string;
 
   @IsString()
   @ApiProperty({
     example: '123456',
-    required: true
+    required: false
   })
-  password: string;
+  password?: string;
 
   @IsNumber()
   @ApiProperty({
     example: 1,
     required: false
   })
-  solde: number;
+  solde?: number;
 }

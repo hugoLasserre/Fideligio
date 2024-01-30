@@ -1,25 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { DevelopersService } from './developers.service';
-import { CreateDeveloperDto } from './dto/create-developer.dto';
 import { UpdateDeveloperDto } from './dto/update-developer.dto';
-import { ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('Developer')
 @Controller('developers')
 export class DevelopersController {
   constructor(private readonly developersService: DevelopersService) {}
-
-  @Post()
-  @ApiCreatedResponse({ description: 'Created Succesfully' })
-  @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
-  @ApiForbiddenResponse({ description: 'Unauthorized Request' })
-  @ApiBody({
-    type: CreateDeveloperDto,
-    description: 'Json structure for developer object',
-  })
-  create(@Body() createDeveloperDto: CreateDeveloperDto) {
-    return this.developersService.create(createDeveloperDto);
-  }
 
   @Get()
   @ApiOkResponse({ description: 'The resource was returned successfully' })
@@ -37,7 +25,9 @@ export class DevelopersController {
     return this.developersService.findOne(+id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ description: 'The resource was updated successfully' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -50,7 +40,9 @@ export class DevelopersController {
     return this.developersService.update(+id, updateDeveloperDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
@@ -58,3 +50,4 @@ export class DevelopersController {
     return this.developersService.remove(+id);
   }
 }
+

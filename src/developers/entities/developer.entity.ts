@@ -5,18 +5,21 @@ export class Developer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   cleAPI?: string;
 
   @Column({ unique: true })
   entreprise: string;
 
+  @Column()
+  password: string;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   status?: string;
 
-  @Column()
-  notes: string;
+  @Column({ nullable: true })
+  notes?: string;
 }

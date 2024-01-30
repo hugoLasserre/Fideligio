@@ -11,10 +11,11 @@ export class CreateDeveloperDto {
   })
   entreprise: string;
 
+  @IsNotEmpty()
   @IsString()
   @ApiProperty({
-    example: 'Informations',
-    required: false
+    example: '123456',
+    required: true
   })
-  notes?: string;
+  password: string;
 }
