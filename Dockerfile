@@ -21,3 +21,10 @@ EXPOSE 3000
 
 # Étape 8: Définir la commande pour démarrer l'application
 CMD ["node", "dist/src/main"]
+
+# Étape 9: Copier le script de démarrage dans le conteneur
+#COPY start.sh /usr/src/app/start.sh
+
+# Étape 10: Rendre le script exécutable et l'utiliser comme point d'entrée
+#RUN chmod +x /usr/src/app/start.sh
+#ENTRYPOINT ["/usr/src/app/start.sh"]

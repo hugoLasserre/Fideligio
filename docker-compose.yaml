@@ -8,14 +8,21 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
       - DB_HOST=db
       - REDIS_HOST=redis
 
   db:
     image: postgres:latest
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready  -d fideligio -U fideligio-user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     container_name: fideligio-db
     environment:
       - POSTGRES_DB=fideligio
