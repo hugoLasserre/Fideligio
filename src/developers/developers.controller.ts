@@ -1,7 +1,24 @@
-import { Controller, Get, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { DevelopersService } from './developers.service';
 import { UpdateDeveloperDto } from './dto/update-developer.dto';
-import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnprocessableEntityResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
@@ -38,7 +55,10 @@ export class DevelopersController {
     type: UpdateDeveloperDto,
     description: 'Json structure for developer object',
   })
-  update(@Param('id') id: string, @Body() updateDeveloperDto: UpdateDeveloperDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDeveloperDto: UpdateDeveloperDto,
+  ) {
     return this.developersService.update(+id, updateDeveloperDto);
   }
 
@@ -52,4 +72,3 @@ export class DevelopersController {
     return this.developersService.remove(+id);
   }
 }
-

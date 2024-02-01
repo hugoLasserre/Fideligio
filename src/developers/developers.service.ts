@@ -4,11 +4,9 @@ import { UpdateDeveloperDto } from './dto/update-developer.dto';
 import { Developer } from './entities/developer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class DevelopersService {
-
   constructor(
     @InjectRepository(Developer)
     private readonly developerRepository: Repository<Developer>,
@@ -16,24 +14,24 @@ export class DevelopersService {
 
   /**
    * Récupère le nouveau développeur envoyé pour lui générer sa clé d'API
-   * 
-   * @param createDeveloperDto 
+   *
+   * @param createDeveloperDto
    * @returns clé d'api
    */
   async create(createDeveloperDto: CreateDeveloperDto): Promise<Developer> {
     const newDeveloper = this.developerRepository.create(createDeveloperDto);
-    newDeveloper.status = "on";
-    this.developerRepository.save(newDeveloper)
+    newDeveloper.status = 'on';
+    this.developerRepository.save(newDeveloper);
     return newDeveloper;
   }
 
   /**
-   * 
+   *
    * @returns tableau de développeurs.
    */
   async findAll(): Promise<Developer[]> {
     return this.developerRepository.find({
-      select: ['id', 'entreprise', 'notes']
+      select: ['id', 'entreprise', 'notes'],
     });
   }
 
@@ -48,17 +46,23 @@ export class DevelopersService {
   }
 
   async notFindByEntreprise(entreprise: string): Promise<Developer> {
-    const developer = await this.developerRepository.findOneBy({entreprise: entreprise});
+    const developer = await this.developerRepository.findOneBy({
+      entreprise: entreprise,
+    });
 
     if (developer) {
-      throw new NotFoundException(`Account with name ${entreprise} already exist`);
+      throw new NotFoundException(
+        `Account with name ${entreprise} already exist`,
+      );
     }
 
     return developer;
   }
 
   async findByEntreprise(entreprise: string): Promise<Developer> {
-    const developer = await this.developerRepository.findOneBy({entreprise: entreprise});
+    const developer = await this.developerRepository.findOneBy({
+      entreprise: entreprise,
+    });
 
     if (!developer) {
       throw new NotFoundException(`Account with name ${entreprise} not exist`);
@@ -67,7 +71,10 @@ export class DevelopersService {
     return developer;
   }
 
-  async update(id: number, updateDeveloperDto: UpdateDeveloperDto): Promise<Developer> {
+  async update(
+    id: number,
+    updateDeveloperDto: UpdateDeveloperDto,
+  ): Promise<Developer> {
     const developer = await this.developerRepository.findOne({ where: { id } });
 
     if (!developer) {

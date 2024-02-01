@@ -7,9 +7,9 @@ import { Consumer } from './entities/consumer.entity';
 
 @Injectable()
 export class ConsumersService {
-
   constructor(
-    @InjectRepository(Consumer) private readonly consumerRepository: Repository<Consumer>
+    @InjectRepository(Consumer)
+    private readonly consumerRepository: Repository<Consumer>,
   ) {}
 
   create(createConsumerDto: CreateConsumerDto) {
@@ -19,9 +19,9 @@ export class ConsumersService {
   }
 
   findAll() {
-    let listConsumers = this.consumerRepository.find({
-        select: ['id', 'email', 'solde']
-      });
+    const listConsumers = this.consumerRepository.find({
+      select: ['id', 'email', 'solde'],
+    });
     return listConsumers;
   }
 

@@ -1,8 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ConsumersService } from './consumers.service';
 import { CreateConsumerDto } from './dto/create-consumer.dto';
 import { UpdateConsumerDto } from './dto/update-consumer.dto';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnprocessableEntityResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
@@ -51,7 +70,10 @@ export class ConsumersController {
     type: UpdateConsumerDto,
     description: 'Json structure for consumer object',
   })
-  update(@Param('id') id: string, @Body() updateConsumerDto: UpdateConsumerDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateConsumerDto: UpdateConsumerDto,
+  ) {
     return this.consumersService.update(+id, updateConsumerDto);
   }
 

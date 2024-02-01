@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -11,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
   migrations: ['dist/db/migrations/*.js'],
   migrationsTableName: 'migrations',
   // synchronize: true, // À n'utiliser qu'en développement pour synchroniser automatiquement le schéma avec la base de données
-}
+};
 
-const dataSource = new DataSource(dataSourceOptions)
-export default dataSource
+const dataSource = new DataSource(dataSourceOptions);
+export default dataSource;

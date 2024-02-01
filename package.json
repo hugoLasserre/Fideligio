@@ -36,6 +36,7 @@
     "cache-manager": "^5.3.2",
     "cache-manager-ioredis": "^2.1.0",
     "class-validator": "^0.14.0",
+    "eslint-plugin-sonar": "^0.13.2",
     "ioredis": "^5.3.2",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
