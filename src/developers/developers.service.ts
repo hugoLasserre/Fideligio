@@ -4,6 +4,7 @@ import { UpdateDeveloperDto } from './dto/update-developer.dto';
 import { Developer } from './entities/developer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class DevelopersService {
@@ -19,9 +20,18 @@ export class DevelopersService {
    * @returns clé d'api
    */
   async create(createDeveloperDto: CreateDeveloperDto): Promise<Developer> {
-    const newDeveloper = this.developerRepository.create(createDeveloperDto);
-    newDeveloper.status = 'on';
-    this.developerRepository.save(newDeveloper);
+    const { password, ...rest } = createDeveloperDto;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newDeveloper = this.developerRepository.create({
+      ...rest,
+      password: hashedPassword,
+      status: 'on',
+    });
+
+    await this.developerRepository.save(newDeveloper);
     return newDeveloper;
   }
 

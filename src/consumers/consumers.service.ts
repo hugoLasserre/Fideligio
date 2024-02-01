@@ -4,6 +4,7 @@ import { UpdateConsumerDto } from './dto/update-consumer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Consumer } from './entities/consumer.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ConsumersService {
@@ -12,9 +13,18 @@ export class ConsumersService {
     private readonly consumerRepository: Repository<Consumer>,
   ) {}
 
-  create(createConsumerDto: CreateConsumerDto) {
-    const newConsumer = this.consumerRepository.create(createConsumerDto);
-    newConsumer.solde = 0;
+  async create(createConsumerDto: CreateConsumerDto): Promise<Consumer> {
+    const { password, ...rest } = createConsumerDto;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newConsumer = this.consumerRepository.create({
+      ...rest,
+      password: hashedPassword,
+      solde: 0,
+    });
+
     return this.consumerRepository.save(newConsumer);
   }
 
