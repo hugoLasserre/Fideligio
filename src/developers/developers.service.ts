@@ -15,9 +15,10 @@ export class DevelopersService {
 
   /**
    * Récupère le nouveau développeur envoyé pour lui générer sa clé d'API
+   * Hash le password
    *
    * @param createDeveloperDto
-   * @returns clé d'api
+   * @returns Developer
    */
   async create(createDeveloperDto: CreateDeveloperDto): Promise<Developer> {
     const { password, ...rest } = createDeveloperDto;
@@ -36,8 +37,9 @@ export class DevelopersService {
   }
 
   /**
+   * Récupère tous les développeurs
    *
-   * @returns tableau de développeurs.
+   * @returns Liste de Developer
    */
   async findAll(): Promise<Developer[]> {
     return this.developerRepository.find({
@@ -45,6 +47,12 @@ export class DevelopersService {
     });
   }
 
+  /**
+   * Récupère un développeur grâce à son id
+   *
+   * @param id
+   * @returns Developer
+   */
   async findOne(id: number): Promise<Developer> {
     const developer = await this.developerRepository.findOne({ where: { id } });
 
@@ -55,6 +63,12 @@ export class DevelopersService {
     return developer;
   }
 
+  /**
+   * Vérifie que l'entreprise n'a pas déjà un compte à son nom
+   *
+   * @param entreprise
+   * @returns Developer
+   */
   async notFindByEntreprise(entreprise: string): Promise<Developer> {
     const developer = await this.developerRepository.findOneBy({
       entreprise: entreprise,
@@ -69,6 +83,12 @@ export class DevelopersService {
     return developer;
   }
 
+  /**
+   * Récupère le développeur grâce au nom de son entreprise
+   *
+   * @param entreprise
+   * @returns Developer
+   */
   async findByEntreprise(entreprise: string): Promise<Developer> {
     const developer = await this.developerRepository.findOneBy({
       entreprise: entreprise,
@@ -81,6 +101,13 @@ export class DevelopersService {
     return developer;
   }
 
+  /**
+   * Met à jour un développeur grâce à son id
+   *
+   * @param id
+   * @param updateDeveloperDto
+   * @returns Developer
+   */
   async update(
     id: number,
     updateDeveloperDto: UpdateDeveloperDto,
@@ -96,6 +123,11 @@ export class DevelopersService {
     return await this.developerRepository.save(developer);
   }
 
+  /**
+   * Supprime le développeur grâce à son id
+   *
+   * @param id
+   */
   async remove(id: number): Promise<void> {
     const developer = await this.developerRepository.findOne({ where: { id } });
 

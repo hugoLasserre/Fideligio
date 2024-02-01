@@ -13,6 +13,12 @@ export class ConsumersService {
     private readonly consumerRepository: Repository<Consumer>,
   ) {}
 
+  /**
+   * Créé un client
+   *
+   * @param createConsumerDto
+   * @returns createConsumerDto
+   */
   async create(createConsumerDto: CreateConsumerDto): Promise<Consumer> {
     const { password, ...rest } = createConsumerDto;
 
@@ -28,6 +34,11 @@ export class ConsumersService {
     return this.consumerRepository.save(newConsumer);
   }
 
+  /**
+   * Récupère tous les clients
+   *
+   * @returns Liste de clients
+   */
   findAll() {
     const listConsumers = this.consumerRepository.find({
       select: ['id', 'email', 'solde'],
@@ -35,6 +46,12 @@ export class ConsumersService {
     return listConsumers;
   }
 
+  /**
+   * Récupère un client grâce à son id
+   *
+   * @param id
+   * @returns Consumer
+   */
   async findOne(id: number) {
     const consumer = await this.consumerRepository.findOne({ where: { id } });
 
@@ -45,6 +62,13 @@ export class ConsumersService {
     return consumer;
   }
 
+  /**
+   * Met à jour un client grâce à son id
+   *
+   * @param id
+   * @param updateConsumerDto
+   * @returns Consumer
+   */
   async update(id: number, updateConsumerDto: UpdateConsumerDto) {
     const consumer = await this.consumerRepository.findOne({ where: { id } });
 
@@ -57,6 +81,11 @@ export class ConsumersService {
     return await this.consumerRepository.save(consumer);
   }
 
+  /**
+   * Supprime un client grâce à son id
+   *
+   * @param id
+   */
   async remove(id: number) {
     const consumer = await this.consumerRepository.findOne({ where: { id } });
 

@@ -28,6 +28,11 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
 export class DevelopersController {
   constructor(private readonly developersService: DevelopersService) {}
 
+  /**
+   * GetAll
+   *
+   * @returns List of Developers
+   */
   @Get()
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -36,6 +41,12 @@ export class DevelopersController {
     return this.developersService.findAll();
   }
 
+  /**
+   * GetById
+   *
+   * @param id
+   * @returns Developers
+   */
   @Get(':id')
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -44,6 +55,13 @@ export class DevelopersController {
     return this.developersService.findOne(+id);
   }
 
+  /**
+   * Update
+   *
+   * @param id
+   * @param updateDeveloperDto
+   * @returns Developers
+   */
   @UseGuards(AuthGuard)
   @Patch(':id')
   @ApiBearerAuth()
@@ -62,6 +80,12 @@ export class DevelopersController {
     return this.developersService.update(+id, updateDeveloperDto);
   }
 
+  /**
+   * Delete
+   *
+   * @param id
+   * @returns Developers
+   */
   @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiBearerAuth()

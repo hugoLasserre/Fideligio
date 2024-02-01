@@ -26,6 +26,11 @@ import { CreateDeveloperDto } from 'src/developers/dto/create-developer.dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  /**
+   *
+   * @param developer
+   * @returns access_token
+   */
   @Post('signup')
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
@@ -38,6 +43,11 @@ export class AuthController {
     return this.authService.signUp(developer);
   }
 
+  /**
+   *
+   * @param req
+   * @returns access_token
+   */
   @UseGuards(AuthGuard)
   @Patch('generateApiKey')
   @ApiBearerAuth()

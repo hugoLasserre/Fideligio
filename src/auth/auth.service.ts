@@ -11,6 +11,13 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * Vérifie que l'entreprise n'existe pas
+   * Génère un token temporaire
+   *
+   * @param entreprise
+   * @returns access_token
+   */
   async signUp(
     entreprise: CreateDeveloperDto,
   ): Promise<{ access_token: string }> {
@@ -34,6 +41,12 @@ export class AuthService {
     };
   }
 
+  /**
+   * Génère un token sur 10 ans
+   *
+   * @param username
+   * @returns access_token
+   */
   async generateApiKey(username: string): Promise<{ access_token: string }> {
     const user = await this.developerService.findByEntreprise(username);
 

@@ -33,6 +33,12 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
 export class ConsumersController {
   constructor(private readonly consumersService: ConsumersService) {}
 
+  /**
+   * Create
+   *
+   * @param createConsumerDto
+   * @returns Consumer
+   */
   @Post()
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
@@ -45,6 +51,11 @@ export class ConsumersController {
     return this.consumersService.create(createConsumerDto);
   }
 
+  /**
+   * GetAll
+   *
+   * @returns List of Consumers
+   */
   @Get()
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -53,6 +64,12 @@ export class ConsumersController {
     return this.consumersService.findAll();
   }
 
+  /**
+   * GetById
+   *
+   * @param id
+   * @returns Consumer
+   */
   @Get(':id')
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -61,6 +78,13 @@ export class ConsumersController {
     return this.consumersService.findOne(+id);
   }
 
+  /**
+   * Update
+   *
+   * @param id
+   * @param updateConsumerDto
+   * @returns Consumer
+   */
   @Patch(':id')
   @ApiOkResponse({ description: 'The resource was updated successfully' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
@@ -77,6 +101,12 @@ export class ConsumersController {
     return this.consumersService.update(+id, updateConsumerDto);
   }
 
+  /**
+   * Delete
+   *
+   * @param id
+   * @returns Consumer
+   */
   @Delete(':id')
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
