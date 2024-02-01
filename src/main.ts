@@ -1,9 +1,10 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { SeedService } from './developers/seed.service'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule)
 
   const config = new DocumentBuilder()
     .setTitle('Fideligio')
@@ -11,10 +12,17 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .addTag('Fideligio')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+    .build()
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('/', app, document)
 
-  await app.listen(3000);
+  if (process.env.SEED === 'true') {
+    const seedService = app.get(SeedService)
+    console.log('Seeding...')
+    await seedService.seed()
+    console.log('Seeding done.')
+  }
+
+  await app.listen(3000)
 }
-bootstrap();
+bootstrap()

@@ -20,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { Developer } from 'src/developers/entities/developer.entity';
 import { CreateDeveloperDto } from 'src/developers/dto/create-developer.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -31,6 +32,7 @@ export class AuthController {
    * @param developer
    * @returns access_token
    */
+  @Throttle({ limit: 1, ttl: 3000 })
   @Post('signup')
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })

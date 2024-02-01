@@ -1,6 +1,9 @@
 # Étape 1: Utiliser une image de base Node
 FROM node:16-alpine
 
+# Installer PostgreSQL client
+RUN apk add --no-cache postgresql-client
+
 # Étape 2: Définir le répertoire de travail dans le conteneur
 WORKDIR /usr/src/app
 
@@ -27,4 +30,5 @@ CMD ["node", "dist/src/main"]
 
 # Étape 10: Rendre le script exécutable et l'utiliser comme point d'entrée
 #RUN chmod +x /usr/src/app/start.sh
-#ENTRYPOINT ["/usr/src/app/start.sh"]
+ENTRYPOINT ["/usr/src/app/start.sh"]
+
