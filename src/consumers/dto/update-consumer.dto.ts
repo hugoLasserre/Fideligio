@@ -1,11 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateConsumerDto } from './create-consumer.dto';
-import { IsString, IsNumber, IsEmail } from 'class-validator';
+import { IsString, IsNumber, IsEmail, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateConsumerDto extends PartialType(CreateConsumerDto) {
 
-  @IsString()
+  @IsString({ message: "email has to be a string" })
   @IsEmail()
   @ApiProperty({
     example: 'test.test@test.com',
@@ -13,7 +13,7 @@ export class UpdateConsumerDto extends PartialType(CreateConsumerDto) {
   })
   email?: string;
 
-  @IsString()
+  @IsString({ message: "password has to be a string" })
   @ApiProperty({
     example: '123456',
     required: false
@@ -21,6 +21,7 @@ export class UpdateConsumerDto extends PartialType(CreateConsumerDto) {
   password?: string;
 
   @IsNumber()
+  @Min(0)
   @ApiProperty({
     example: 1,
     required: false

@@ -5,35 +5,35 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateDeveloperDto extends PartialType(CreateDeveloperDto) {
 
-  @IsString()
+  @IsString({ message: "cle api has to be a string" })
   @ApiProperty({
     example: 'yrctuvyibuonip,opnibu',
     required: false
   })
   cleAPI?: string;
 
-  @IsString()
+  @IsString({ message: "entreprise has to be a string" })
   @ApiProperty({
     example: 'Apple',
     required: false
   })
   entreprise?: string;
 
-  @IsString()
+  @IsString({ message: "password has to be a string" })
   @ApiProperty({
     example: '123456',
     required: false
   })
   password?: string;
 
-  @IsString()
+  @IsString({ message: "status has to be a string" })
   @ApiProperty({
     example: 'Active',
     required: false
   })
   status?: string;
 
-  @IsString()
+  @IsString({ message: "notes has to be a string" })
   @ApiProperty({
     example: 'Informations',
     required: false

@@ -3,16 +3,16 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateDeveloperDto {
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: "entreprise can't be empty" })
+  @IsString({ message: "entreprise has to be a string" })
   @ApiProperty({
     example: 'Apple',
     required: true
   })
   entreprise: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: "password can't be empty" })
+  @IsString({ message: "password has to be a string" })
   @ApiProperty({
     example: '123456',
     required: true
