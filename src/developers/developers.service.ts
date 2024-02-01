@@ -21,18 +21,23 @@ export class DevelopersService {
    * @returns Developer
    */
   async create(createDeveloperDto: CreateDeveloperDto): Promise<Developer> {
+    // Extraction du mot de passe et du reste des données du DTO
     const { password, ...rest } = createDeveloperDto;
 
     const saltRounds = 10;
+    // Hachage du mot de passe avec bcrypt
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    // Création d'une nouvelle instance de développeur avec le mot de passe haché
     const newDeveloper = this.developerRepository.create({
       ...rest,
-      password: hashedPassword,
-      status: 'on',
+      password: hashedPassword, // Assignation du mot de passe haché à l'instance
+      status: 'on', // Définition du statut par défaut
     });
 
+    // Sauvegarde du nouvel utilisateur dans la base de données
     await this.developerRepository.save(newDeveloper);
+
     return newDeveloper;
   }
 
@@ -54,8 +59,10 @@ export class DevelopersService {
    * @returns Developer
    */
   async findOne(id: number): Promise<Developer> {
+    // Recherche d'un développeur dans la base de données par son ID
     const developer = await this.developerRepository.findOne({ where: { id } });
 
+    // Si aucun développeur n'est trouvé, lance une exception NotFoundException
     if (!developer) {
       throw new NotFoundException(`Developer with ID ${id} not found`);
     }
@@ -70,13 +77,15 @@ export class DevelopersService {
    * @returns Developer
    */
   async notFindByEntreprise(entreprise: string): Promise<Developer> {
-    const developer = await this.developerRepository.findOneBy({
-      entreprise: entreprise,
+    // Recherche d'un développeur dans la base de données avec le même nom d'entreprise
+    const developer = await this.developerRepository.findOne({
+      where: { entreprise: entreprise },
     });
 
+    // Si un développeur avec le même nom d'entreprise est trouvé, lance une exception NotFoundException
     if (developer) {
       throw new NotFoundException(
-        `Account with name ${entreprise} already exist`,
+        `Account with name ${entreprise} already exists`,
       );
     }
 
@@ -90,12 +99,16 @@ export class DevelopersService {
    * @returns Developer
    */
   async findByEntreprise(entreprise: string): Promise<Developer> {
-    const developer = await this.developerRepository.findOneBy({
-      entreprise: entreprise,
+    // Recherche d'un développeur dans la base de données avec le nom d'entreprise spécifié
+    const developer = await this.developerRepository.findOne({
+      where: { entreprise: entreprise },
     });
 
+    // Si aucun développeur n'est trouvé, lance une exception NotFoundException
     if (!developer) {
-      throw new NotFoundException(`Account with name ${entreprise} not exist`);
+      throw new NotFoundException(
+        `Account with name ${entreprise} does not exist`,
+      );
     }
 
     return developer;
@@ -112,14 +125,17 @@ export class DevelopersService {
     id: number,
     updateDeveloperDto: UpdateDeveloperDto,
   ): Promise<Developer> {
+    // Recherche d'un développeur dans la base de données par son ID
     const developer = await this.developerRepository.findOne({ where: { id } });
 
+    // Si aucun développeur n'est trouvé, lance une exception NotFoundException
     if (!developer) {
       throw new NotFoundException(`Developer with ID ${id} not found`);
     }
 
     Object.assign(developer, updateDeveloperDto);
 
+    // Sauvegarde les modifications dans la base de données
     return await this.developerRepository.save(developer);
   }
 
@@ -129,12 +145,15 @@ export class DevelopersService {
    * @param id
    */
   async remove(id: number): Promise<void> {
+    // Recherche d'un développeur dans la base de données par son ID
     const developer = await this.developerRepository.findOne({ where: { id } });
 
+    // Si aucun développeur n'est trouvé, lance une exception NotFoundException
     if (!developer) {
       throw new NotFoundException(`Developer with ID ${id} not found`);
     }
 
+    // Supprime le développeur de la base de données
     await this.developerRepository.remove(developer);
   }
 }
