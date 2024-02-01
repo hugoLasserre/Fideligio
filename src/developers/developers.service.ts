@@ -32,7 +32,9 @@ export class DevelopersService {
    * @returns tableau de développeurs.
    */
   async findAll(): Promise<Developer[]> {
-    return this.developerRepository.find();
+    return this.developerRepository.find({
+      select: ['id', 'entreprise', 'notes']
+    });
   }
 
   async findOne(id: number): Promise<Developer> {

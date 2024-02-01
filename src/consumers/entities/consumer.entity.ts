@@ -11,7 +11,7 @@ export class Consumer {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ unsigned: true, default: 0 })
   solde: number;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

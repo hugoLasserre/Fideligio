@@ -9,18 +9,20 @@ import { Consumer } from './entities/consumer.entity';
 export class ConsumersService {
 
   constructor(
-    @InjectRepository(Consumer)
-    private readonly consumerRepository: Repository<Consumer>,
+    @InjectRepository(Consumer) private readonly consumerRepository: Repository<Consumer>
   ) {}
 
   create(createConsumerDto: CreateConsumerDto) {
     const newConsumer = this.consumerRepository.create(createConsumerDto);
     newConsumer.solde = 0;
-    return this.consumerRepository.save(newConsumer)
+    return this.consumerRepository.save(newConsumer);
   }
 
   findAll() {
-    return this.consumerRepository.find();
+    let listConsumers = this.consumerRepository.find({
+        select: ['id', 'email', 'solde']
+      });
+    return listConsumers;
   }
 
   async findOne(id: number) {

@@ -1,10 +1,12 @@
-import { Controller, Get, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
 import { DevelopersService } from './developers.service';
 import { UpdateDeveloperDto } from './dto/update-developer.dto';
 import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Developer')
+@UseInterceptors(CacheInterceptor)
 @Controller('developers')
 export class DevelopersController {
   constructor(private readonly developersService: DevelopersService) {}
