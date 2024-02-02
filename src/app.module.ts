@@ -9,9 +9,9 @@ import { RedisOptions } from 'ioredis';
 import * as redisStore from 'cache-manager-ioredis';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 
 export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>;
 
@@ -42,6 +42,10 @@ export type CacheIORedis = Cache<ReturnType<typeof redisStore.create>>;
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
