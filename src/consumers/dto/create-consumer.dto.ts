@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateConsumerDto {
   @IsNotEmpty({ message: "email can't be empty" })
@@ -17,12 +17,4 @@ export class CreateConsumerDto {
     required: true,
   })
   password: string;
-
-  @IsNumber()
-  @Min(0)
-  @ApiProperty({
-    example: 1,
-    required: false,
-  })
-  solde?: number;
 }

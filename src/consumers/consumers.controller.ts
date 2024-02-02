@@ -26,8 +26,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Consumer')
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
 @UseInterceptors(CacheInterceptor)
 @Controller('consumers')
 export class ConsumersController {
@@ -57,6 +55,8 @@ export class ConsumersController {
    * @returns List of Consumers
    */
   @Get()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
@@ -71,6 +71,8 @@ export class ConsumersController {
    * @returns Consumer
    */
   @Get(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
@@ -86,6 +88,8 @@ export class ConsumersController {
    * @returns Consumer
    */
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @ApiOkResponse({ description: 'The resource was updated successfully' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
@@ -108,6 +112,8 @@ export class ConsumersController {
    * @returns Consumer
    */
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @ApiOkResponse({ description: 'The resource was returned successfully' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
   @ApiNotFoundResponse({ description: 'Resource not found' })
