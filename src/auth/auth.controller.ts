@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Patch,
   Post,
   Request,
@@ -46,7 +47,13 @@ export class AuthController {
     return this.authService.signUp(developer);
   }
 
-  @Post('signin')
+  /**
+   * Login
+   *
+   * @param developer
+   * @returns access_token
+   */
+  @Get('signin')
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
