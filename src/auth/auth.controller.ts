@@ -28,11 +28,12 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   /**
+   * Register
    *
    * @param developer
    * @returns access_token
    */
-  @Throttle({ limit: 1, ttl: 3000 })
+  @Throttle({ default: { limit: 1, ttl: 3000 } })
   @Post('signup')
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
