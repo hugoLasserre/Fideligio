@@ -116,6 +116,10 @@ export class ConsumersService {
     }
 
     // Supprime le consommateur de la base de données
-    await this.consumerRepository.remove(consumer);
+    try {
+      await this.consumerRepository.delete(consumer.id);
+    } catch (e) {
+      throw new Error(`Impossible to delete consumer with id ${id}`);
+    }
   }
 }

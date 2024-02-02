@@ -166,6 +166,10 @@ export class DevelopersService {
     }
 
     // Supprime le développeur de la base de données
-    await this.developerRepository.remove(developer);
+    try {
+      await this.developerRepository.delete(developer.id);
+    } catch (e) {
+      throw new Error(`Impossible to delete the developer with id ${id}`);
+    }
   }
 }
