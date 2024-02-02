@@ -53,7 +53,7 @@ export class AuthController {
    * @param developer
    * @returns access_token
    */
-  @Get('signin')
+  @Post('signin')
   @ApiCreatedResponse({ description: 'Created Succesfully' })
   @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
   @ApiForbiddenResponse({ description: 'Unauthorized Request' })
