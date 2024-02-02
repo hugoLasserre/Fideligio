@@ -60,7 +60,10 @@ export class DevelopersService {
    */
   async findOne(id: number): Promise<Developer> {
     // Recherche d'un développeur dans la base de données par son ID
-    const developer = await this.developerRepository.findOne({ where: { id } });
+    const developer = await this.developerRepository.findOne({
+      select: ['id', 'entreprise', 'notes'],
+      where: { id },
+    });
 
     // Si aucun développeur n'est trouvé, lance une exception NotFoundException
     if (!developer) {

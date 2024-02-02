@@ -42,8 +42,8 @@ export class ConsumersService {
    *
    * @returns Liste de clients
    */
-  findAll() {
-    const listConsumers = this.consumerRepository.find({
+  async findAll() {
+    const listConsumers = await this.consumerRepository.find({
       select: ['id', 'email', 'solde'],
     });
     return listConsumers;
@@ -57,7 +57,10 @@ export class ConsumersService {
    */
   async findOne(id: number) {
     // Recherche d'un consommateur dans la base de données par son ID
-    const consumer = await this.consumerRepository.findOne({ where: { id } });
+    const consumer = await this.consumerRepository.findOne({
+      select: ['id', 'email', 'solde'],
+      where: { id },
+    });
 
     // Si aucun consommateur n'est trouvé, lance une exception NotFoundException
     if (!consumer) {
