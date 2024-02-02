@@ -17,11 +17,4 @@ export class UpdateDeveloperDto extends PartialType(CreateDeveloperDto) {
     required: false,
   })
   status?: string;
-
-  @IsString({ message: 'notes has to be a string' })
-  @ApiProperty({
-    example: 'Informations',
-    required: false,
-  })
-  notes?: string;
 }

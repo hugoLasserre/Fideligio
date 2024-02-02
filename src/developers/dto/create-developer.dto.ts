@@ -17,4 +17,11 @@ export class CreateDeveloperDto {
     required: true,
   })
   password: string;
+
+  @IsString({ message: 'notes has to be a string' })
+  @ApiProperty({
+    example: 'Informations',
+    required: false,
+  })
+  notes?: string;
 }
