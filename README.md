@@ -40,6 +40,18 @@ Visiter le <a href="http://localhost:3000/">Swagger</a>.
 $ npm install
 ```
 
+## Pour lancer le projet veuillez installer DOCKER sur votre pc et ensuite utiliser la commande :
+
+```bash
+docker-compose up --build
+```
+
+## Pour arrêter le projet proprement :
+
+```bash
+docker-compose down
+```
+
 ## GIT
 
 Si le commit concerne une création :
