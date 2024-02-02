@@ -42,8 +42,20 @@ export class AuthController {
     type: CreateDeveloperDto,
     description: 'Json structure for developer object',
   })
-  signIn(@Body() developer: Developer) {
+  signUp(@Body() developer: Developer) {
     return this.authService.signUp(developer);
+  }
+
+  @Post('signin')
+  @ApiCreatedResponse({ description: 'Created Succesfully' })
+  @ApiUnprocessableEntityResponse({ description: 'Bad Request' })
+  @ApiForbiddenResponse({ description: 'Unauthorized Request' })
+  @ApiBody({
+    type: CreateDeveloperDto,
+    description: 'Json structure for developer object',
+  })
+  signIn(@Body() developer: Developer) {
+    return this.authService.signIn(developer);
   }
 
   /**

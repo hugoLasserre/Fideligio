@@ -96,6 +96,38 @@ export class DevelopersService {
   }
 
   /**
+   * Vérifie que l'entreprise n'a pas déjà un compte à son nom
+   *
+   * @param entreprise
+   * @returns Developer
+   */
+  async findByEntrepriseAndPassword(
+    entreprise: string,
+    password: string,
+  ): Promise<string> {
+    // Recherche d'un développeur dans la base de données avec le même nom d'entreprise et mot de passe
+    const developer = await this.developerRepository.findOne({
+      where: { entreprise: entreprise },
+    });
+
+    // Si le username ou la mot de passe n'existe pas
+    if (!developer) {
+      throw new NotFoundException(`Username or password incorrect`);
+    }
+
+    // Vérifiez si le mot de passe fourni correspond au mot de passe haché stocké
+    const passwordMatch = await bcrypt.compare(password, developer.password);
+
+    // Si passwordMatch est true, cela signifie que les mots de passe correspondent
+    if (!passwordMatch) {
+      // Le mot de passe fourni est incorrect
+      throw new NotFoundException(`Incorrect password`);
+    }
+
+    return developer.cleAPI;
+  }
+
+  /**
    * Récupère le développeur grâce au nom de son entreprise
    *
    * @param entreprise

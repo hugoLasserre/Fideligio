@@ -46,6 +46,33 @@ export class AuthService {
   }
 
   /**
+   * Vérifie que l'entreprise et le mot de passe correspondent
+   *
+   * @param entreprise
+   * @returns access_token
+   */
+  async signIn(
+    entreprise: CreateDeveloperDto,
+  ): Promise<{ access_token: string }> {
+    // Vérifie si un développeur avec le même nom d'entreprise existe déjà
+    const access_token =
+      await this.developerService.findByEntrepriseAndPassword(
+        entreprise.entreprise,
+        entreprise.password,
+      );
+
+    // Si le développeur existe déjà, lance une exception ConflictException
+    // (code HTTP 409 - Conflict)
+    if (!access_token) {
+      throw new Error('Account not exist');
+    }
+
+    return {
+      access_token: access_token,
+    };
+  }
+
+  /**
    * Génère un token sur 10 ans
    *
    * @param username
