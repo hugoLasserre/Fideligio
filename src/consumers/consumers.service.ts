@@ -83,6 +83,15 @@ export class ConsumersService {
       throw new NotFoundException(`Consumer with ID ${id} not found`);
     }
 
+    // Itère sur les propriétés du DTO de mise à jour
+    for (const key in updateConsumerDto) {
+      // Vérifie si la propriété est définie (non nulle)
+      if (updateConsumerDto[key] !== undefined) {
+        // Met à jour la propriété du consommateur avec la valeur du DTO
+        consumer[key] = updateConsumerDto[key];
+      }
+    }
+
     Object.assign(consumer, updateConsumerDto);
 
     // Enregistre les modifications dans la base de données

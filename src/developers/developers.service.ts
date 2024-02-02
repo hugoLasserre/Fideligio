@@ -133,6 +133,15 @@ export class DevelopersService {
       throw new NotFoundException(`Developer with ID ${id} not found`);
     }
 
+    // Itère sur les propriétés du DTO de mise à jour
+    for (const key in updateDeveloperDto) {
+      // Vérifie si la propriété est définie (non nulle)
+      if (updateDeveloperDto[key] !== undefined) {
+        // Met à jour la propriété du développeur avec la valeur du DTO
+        developer[key] = updateDeveloperDto[key];
+      }
+    }
+
     Object.assign(developer, updateDeveloperDto);
 
     // Sauvegarde les modifications dans la base de données
